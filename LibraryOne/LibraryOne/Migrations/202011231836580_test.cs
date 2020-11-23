@@ -3,7 +3,7 @@ namespace LibraryOne.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class test : DbMigration
     {
         public override void Up()
         {
@@ -11,22 +11,24 @@ namespace LibraryOne.Migrations
                 "dbo.Authors",
                 c => new
                     {
-                        AuthorId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Age = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(),
+                        LastName = c.String(),
                     })
-                .PrimaryKey(t => t.AuthorId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Books",
                 c => new
                     {
-                        BookId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        ISBN = c.String(),
+                        Id = c.Int(nullable: false, identity: true),
+                        Title = c.String(),
+                        Publisher = c.String(),
+                        Rating = c.Int(nullable: false),
+                        CopiesSold = c.Int(nullable: false),
                         Publisher_PublisherId = c.Int(),
                     })
-                .PrimaryKey(t => t.BookId)
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Publishers", t => t.Publisher_PublisherId)
                 .Index(t => t.Publisher_PublisherId);
             
@@ -44,24 +46,24 @@ namespace LibraryOne.Migrations
                 "dbo.BookAuthors",
                 c => new
                     {
-                        Book_BookId = c.Int(nullable: false),
-                        Author_AuthorId = c.Int(nullable: false),
+                        Book_Id = c.Int(nullable: false),
+                        Author_Id = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Book_BookId, t.Author_AuthorId })
-                .ForeignKey("dbo.Books", t => t.Book_BookId, cascadeDelete: true)
-                .ForeignKey("dbo.Authors", t => t.Author_AuthorId, cascadeDelete: true)
-                .Index(t => t.Book_BookId)
-                .Index(t => t.Author_AuthorId);
+                .PrimaryKey(t => new { t.Book_Id, t.Author_Id })
+                .ForeignKey("dbo.Books", t => t.Book_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Authors", t => t.Author_Id, cascadeDelete: true)
+                .Index(t => t.Book_Id)
+                .Index(t => t.Author_Id);
             
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Books", "Publisher_PublisherId", "dbo.Publishers");
-            DropForeignKey("dbo.BookAuthors", "Author_AuthorId", "dbo.Authors");
-            DropForeignKey("dbo.BookAuthors", "Book_BookId", "dbo.Books");
-            DropIndex("dbo.BookAuthors", new[] { "Author_AuthorId" });
-            DropIndex("dbo.BookAuthors", new[] { "Book_BookId" });
+            DropForeignKey("dbo.BookAuthors", "Author_Id", "dbo.Authors");
+            DropForeignKey("dbo.BookAuthors", "Book_Id", "dbo.Books");
+            DropIndex("dbo.BookAuthors", new[] { "Author_Id" });
+            DropIndex("dbo.BookAuthors", new[] { "Book_Id" });
             DropIndex("dbo.Books", new[] { "Publisher_PublisherId" });
             DropTable("dbo.BookAuthors");
             DropTable("dbo.Publishers");
