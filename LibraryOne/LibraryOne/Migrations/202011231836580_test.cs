@@ -7,54 +7,15 @@ namespace LibraryOne.Migrations
     {
         public override void Up()
         {
-            CreateTable(
-                "dbo.Authors",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Books",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Title = c.String(),
-                        Publisher = c.String(),
-                        Rating = c.Int(nullable: false),
-                        CopiesSold = c.Int(nullable: false),
-                        Publisher_PublisherId = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Publishers", t => t.Publisher_PublisherId)
-                .Index(t => t.Publisher_PublisherId);
-            
-            CreateTable(
-                "dbo.Publishers",
-                c => new
-                    {
-                        PublisherId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Established = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.PublisherId);
-            
-            CreateTable(
-                "dbo.BookAuthors",
-                c => new
-                    {
-                        Book_Id = c.Int(nullable: false),
-                        Author_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Book_Id, t.Author_Id })
-                .ForeignKey("dbo.Books", t => t.Book_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Authors", t => t.Author_Id, cascadeDelete: true)
-                .Index(t => t.Book_Id)
-                .Index(t => t.Author_Id);
-            
+            DropForeignKey("dbo.BookAuthors", "Book_Id", "dbo.Books");
+            RenameColumn(table: "dbo.BookAuthors", name: "Book_Id", newName: "Book_BookId");
+            RenameIndex(table: "dbo.BookAuthors", name: "IX_Book_Id", newName: "IX_Book_BookId");
+            DropPrimaryKey("dbo.Books");
+            DropColumn("dbo.Books", "Id");
+            AddColumn("dbo.Books", "BookId", c => c.Int(nullable: false, identity: true));
+            AddPrimaryKey("dbo.Books", "BookId");
+            AddForeignKey("dbo.BookAuthors", "Book_BookId", "dbo.Books", "BookId", cascadeDelete: true);
+
         }
         
         public override void Down()

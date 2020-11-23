@@ -2,38 +2,31 @@
 @{
     ViewBag.Title = "Search";
 }
-
-<h2>Search for Book by Id</h2>
+<h2>Search by Book ID</h2>
 <div class="col-md-10">
     <input type="text" id="BookId" size="5" />
     <input type="submit" name="SearchButton" id="SearchButton" value="Search" />
-
-
 </div>
-
 <br />
 <div id="divProcessing">
-    <p> Processing, Please wait....<img src="../../Content/ajax-loader.gif" height="50" /></p>
+    <p>Processing, please wait . . .<img src="../../Content/ajax-loader.gif" height="50" /></p>
 </div>
-
 <br />
-<div id=" divResult"></div>
-
+<div id="divResult"></div>
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
-    $(document).ready(function () {
+        $(document).ready(function () {
             $("#divProcessing").hide();
             $('#SearchButton').click(function () {
                 search();
             });
         });
-
-        function serach() {
+        function search() {
             $("#divResult").empty();
             $("#divProcessing").show();
-            var bookid = $("#BookId").val();
+            var bookId = $("#BookId").val();
             var url = "../api/Books/" + bookId;
             $.ajax({
                 url: url,
@@ -41,6 +34,7 @@
                 dataType: "json",
                 success: function (resp) {
                     //Hide the 'busy' gif:
+                    console.log(resp.Title);
                     $("#divProcessing").hide();
                     $("<h3>Results</h3>").appendTo("#divResult");
                     $("#divResult").append("<p>Title:" + resp.Title + "<br/>Publisher: " + resp.Publisher + "<br/>");
@@ -54,3 +48,6 @@
         }
     </script>
 }
+
+
+
