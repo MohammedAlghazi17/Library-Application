@@ -30,10 +30,10 @@
             });
         });
 
-        function serach() {
+        function search() {
             $("#divResult").empty();
             $("#divProcessing").show();
-            var bookid = $("#BookId").val();
+            var bookId = $("#BookId").val();
             var url = "../api/Books/" + bookId;
             $.ajax({
                 url: url,

@@ -229,7 +229,6 @@ C:\Users\moham\Documents\Desktop\libraryapp\Library-Application\LibraryOne\Libra
 C:\Users\moham\Documents\Desktop\libraryapp\Library-Application\LibraryOne\LibraryOne\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\moham\Documents\Desktop\libraryapp\Library-Application\LibraryOne\LibraryOne\obj\Debug\LibraryOne.csproj.CoreCompileInputs.cache
 C:\Users\moham\Documents\Desktop\libraryapp\Library-Application\LibraryOne\LibraryOne\obj\Debug\LibraryOne.csproj.CopyComplete
-C:\Users\moham\Documents\Desktop\libraryapp\Library-Application\LibraryOne\LibraryOne\obj\Debug\LibraryOne.Migrations.InitialCreate.resources
 C:\Users\moham\Documents\Desktop\libraryapp\Library-Application\LibraryOne\LibraryOne\obj\Debug\LibraryOne.csproj.GenerateResource.cache
 C:\Users\moham\Documents\Desktop\libraryapp\Library-Application\LibraryOne\LibraryOne\obj\Debug\LibraryOne.Migrations.test.resources
 C:\Users\cjmos\Desktop\test\Library-Application\LibraryOne\LibraryOne\bin\LibraryOne.dll.config
