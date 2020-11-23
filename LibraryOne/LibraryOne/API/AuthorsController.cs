@@ -6,9 +6,11 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using LibraryOne.Models;
+using LibraryWebApp.Models;
 
 namespace LibraryOne.API
 {
@@ -17,26 +19,55 @@ namespace LibraryOne.API
         private LibraryModelContext db = new LibraryModelContext();
 
         // GET: api/Authors
-        public IQueryable<Author> GetAuthors()
+        public IQueryable<AuthorDTO> GetAuthors()
         {
-            return db.Authors;
+            var authors = from a in db.Authors
+                          select new AuthorDTO()
+                          {
+                              Id = a.Id,
+                              FirstName = a.FirstName,
+                              LastName = a.LastName,
+                              Books = a.Books.Select(b => new BookDTO()
+                              {
+                                  Id = b.Id,
+                                  Title = b.Title,
+                                  Publisher = b.Publisher
+                              }).ToList()
+                          };
+
+
+            return authors;
         }
 
         // GET: api/Authors/5
-        [ResponseType(typeof(Author))]
-        public IHttpActionResult GetAuthor(int id)
+        [ResponseType(typeof(AuthorDTO))]
+        public async Task<IHttpActionResult> GetAuthor(int id)
         {
-            Author author = db.Authors.Find(id);
-            if (author == null)
+            Author a = await db.Authors.FindAsync(id);
+            if (a == null)
             {
                 return NotFound();
             }
+            AuthorDTO author = new AuthorDTO
+            {
+                Id = a.Id,
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+                Books = a.Books.Select(b => new BookDTO()
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    Publisher = b.Publisher
 
+                }).ToList()
+            };
             return Ok(author);
         }
 
-        // PUT: api/Authors/5
-        [ResponseType(typeof(void))]
+       
+
+                // PUT: api/Authors/5
+                [ResponseType(typeof(void))]
         public IHttpActionResult PutAuthor(int id, Author author)
         {
             if (!ModelState.IsValid)

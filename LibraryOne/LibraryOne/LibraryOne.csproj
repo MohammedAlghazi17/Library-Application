@@ -195,14 +195,16 @@
     <Compile Include="Migrations\202010290956074_InitialCreate.Designer.cs">
       <DependentUpon>202010290956074_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202011192139354_EmptyMigration.cs" />
-    <Compile Include="Migrations\202011192139354_EmptyMigration.Designer.cs">
-      <DependentUpon>202011192139354_EmptyMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202011231824335_test.cs" />
+    <Compile Include="Migrations\202011231824335_test.Designer.cs">
+      <DependentUpon>202011231824335_test.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
+    <Compile Include="Models\AuthorDTO.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BookDTO.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryModelContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -303,8 +305,8 @@
     <EmbeddedResource Include="Migrations\202010290956074_InitialCreate.resx">
       <DependentUpon>202010290956074_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202011192139354_EmptyMigration.resx">
-      <DependentUpon>202011192139354_EmptyMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202011231824335_test.resx">
+      <DependentUpon>202011231824335_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

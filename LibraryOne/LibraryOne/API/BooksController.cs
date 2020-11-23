@@ -6,9 +6,11 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using LibraryOne.Models;
+using LibraryWebApp.Models;
 
 namespace LibraryOne.API
 {
@@ -17,21 +19,57 @@ namespace LibraryOne.API
         private LibraryModelContext db = new LibraryModelContext();
 
         // GET: api/Books
-        public IQueryable<Book> GetBooks()
+        public IQueryable<BookDTO> GetBooks()
         {
-            return db.Books;
+            var books = from b in db.Books
+                        select new BookDTO()
+                        {
+                            Id = b.Id,
+                            Title = b.Title,
+                            CopiesSold = b.CopiesSold,
+                            Publisher = b.Publisher,
+                            Rating = b.Rating,
+                            Authors = b.Authors.Select(a => new AuthorDTO()
+                            {
+                                Id = a.Id,
+                                FirstName = a.FirstName,
+                                LastName = a.LastName
+                            }).ToList()
+
+                        };
+
+
+
+            return books;
         }
 
+
+
         // GET: api/Books/5
-        [ResponseType(typeof(Book))]
-        public IHttpActionResult GetBook(int id)
+        [ResponseType(typeof(BookDTO))]
+        public async Task<IHttpActionResult> GetBook(int id)
         {
-            Book book = db.Books.Find(id);
-            if (book == null)
+            Book b = await db.Books.FindAsync(id);
+            if (b == null)
             {
                 return NotFound();
             }
+            BookDTO book = new BookDTO
+            {
+                Id = b.Id,
+                Title = b.Title,
+                CopiesSold = b.CopiesSold,
+                Publisher = b.Publisher,
+                Rating = b.Rating,
+                Authors = b.Authors.Select(a => new AuthorDTO()
+                {
+                    Id = a.Id,
+                    FirstName = a.FirstName,
+                    LastName = a.LastName
+                }).ToList()
 
+
+            };
             return Ok(book);
         }
 
